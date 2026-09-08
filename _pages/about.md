@@ -21,7 +21,7 @@ redirect_from:
 
 I am a PhD student at Department of Computer Science and Technology, Tsinghua University, advised by Prof. Wenwu Zhu and Prof. Xin Wang.
 
-My interests lie in **Multimodal Understanding**, **Multimodal Generation**, and **Embodied World Model**.
+My interests lie in **Multimodal Understanding & Generation**, **Embodied World Model**, and **Game Agent**.
 
 I received my B.Eng. from School of Materials Science and Engineering, Tsinghua University in 2022.
 
@@ -88,6 +88,7 @@ Feel free to call me Von or VonWei in any casual, non-ID-check situation — I'm
 # 🎃 Interests
 - ⚽️ Football
 - 🏸 Badminton
+- 🎮 Game Agent, I am currently a participant of [3DGameAgentBench](https://suyoumo.github.io/3d-game-agent-bench/)
 - 🃏 I am a huge fan of boardgames, including RPG games (Arkham Horror), actuarial games (Lost Ruins of Arnak, Great Western Trail), and party games (UNO, Avalon, Love Letter). I have organized/participated in online or offline boardgames with friends from but not limited to the following countries: 🇨🇳🇺🇸🇫🇷🇦🇺🇮🇩🇩🇪🇧🇷🇮🇹🇭🇺🇧🇪🇨🇦🇦🇷🇫🇮🇵🇱🇵🇹. I am also designing my own boardgames **Yin Yang Scam（阴阳骗局）** and **Werewolf Scam（狼人骗局）**, and will share progress once they are ready — looking forward to connecting with fellow enthusiasts!
 
   ### My boardgame preferences for games played in 2025
