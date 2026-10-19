@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="v5">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wei Feng 冯惟 — Tsinghua University</title>
+<meta name="description" content="Wei Feng — PhD student, Tsinghua CS. Multimodal Understanding & Generation, Embodied World Model, Game Agent.">
+<meta name="theme-color" content="#FCFCFB">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23660874'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='white' font-family='serif' font-weight='bold'%3E冯%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   main.html = V5(侧栏档案·浅色) 为主体 + V3(终端·暗色) 可切换
+   内容与 个人主页/_pages/about.md 1:1 对应
+   ========================================================= */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html[data-theme="v5"] body{background:#FCFCFB;color:#1B1B1A;font-family:'Inter',-apple-system,'PingFang SC',sans-serif}
+html[data-theme="terminal"] body{background:#0D1117;color:#E6EDF3;font-family:'Inter',-apple-system,'PingFang SC',sans-serif}
+body{margin:0;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(11,95,165,.15)}
+html[data-theme="terminal"] ::selection{background:rgba(88,230,217,.25)}
+
+html[data-theme="terminal"] .v5-root{display:none}
+html[data-theme="v5"] .v3-root{display:none}
+
+/* ---- 主题切换按钮（两种主题下都可见） ---- */
+#themeToggle{position:fixed;right:20px;bottom:20px;z-index:999;cursor:pointer;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:500;
+  padding:9px 16px;border-radius:100px;border:1px solid #1B1B1A;background:#1B1B1A;color:#fff;
+  box-shadow:0 8px 24px -8px rgba(0,0,0,.4);transition:all .2s}
+#themeToggle:hover{background:#660874;border-color:#660874}
+html[data-theme="terminal"] #themeToggle{background:#E6EDF3;color:#0D1117;border-color:#58E6D9}
+html[data-theme="terminal"] #themeToggle:hover{background:#58E6D9;border-color:#58E6D9}
+
+/* =========================================================
+   V5 · 侧栏档案布局
+   ========================================================= */
+.v5-root a{color:#0B5FA5;text-decoration:none}
+.v5-root a:hover{text-decoration:underline;text-underline-offset:3px}
+.v5-shell{display:grid;grid-template-columns:280px 1fr;max-width:1120px;margin:0 auto;min-height:100vh}
+.v5-root aside{border-right:1px solid #ECEAE5;padding:48px 30px 40px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.v5-root main{padding:56px 52px 80px;max-width:820px}
+
+.v5-avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;display:block;
+  border:1px solid #DEDBD4;box-shadow:0 8px 22px -12px rgba(20,30,50,.35)}
+.v5-root aside h1{font-size:23px;font-weight:700;margin:20px 0 2px;letter-spacing:-.01em}
+.v5-root aside h1 .zh{font-weight:400;color:#8F8C86;font-size:.8em;margin-left:4px}
+.v5-prefer{margin:2px 0 14px;font-size:11.5px;color:#8F8C86;line-height:1.3}
+.v5-bio{font-size:13px;color:#55534F;margin:0 0 16px;line-height:1.65}
+.v5-contact{font-size:13px;color:#55534F;margin:0 0 6px;word-break:break-all}
+.v5-contact a{color:#55534F}
+.v5-contact .ic{display:inline-block;width:18px;color:#8F8C86}
+.v5-nav{margin-top:24px;border-top:1px solid #ECEAE5;padding-top:14px;display:flex;flex-direction:column;gap:1px}
+.v5-nav a{color:#55534F;font-size:13.5px;padding:6px 10px;border-radius:8px;
+  border-left:2px solid transparent;margin-left:-12px;transition:all .15s}
+.v5-nav a:hover{color:#1B1B1A;background:#F4F3F0;text-decoration:none}
+.v5-nav a.on{color:#1B1B1A;border-left-color:#0B5FA5;background:#EDF4FA;font-weight:500}
+
+.v5-root section{padding:34px 0 6px;scroll-margin-top:24px}
+.v5-root section:first-of-type{padding-top:0}
+.v5-h2{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8F8C86;
+  margin:0 0 20px;display:flex;align-items:center;gap:12px}
+.v5-h2::after{content:"";flex:1;height:1px;background:#ECEAE5}
+.v5-h2 .emj{font-size:16px;text-transform:none;letter-spacing:0}
+.v5-root p{color:#55534F;margin:0 0 13px}
+.v5-root p b{color:#1B1B1A;font-weight:600}
+
+/* news */
+.v5-news{list-style:none;margin:0;padding:0}
+.v5-news li{display:grid;grid-template-columns:76px 1fr;gap:14px;padding:8px 0;border-bottom:1px dashed #ECEAE5}
+.v5-news li:last-child{border:0}
+.v5-news time{font-size:12px;color:#8F8C86;font-variant-numeric:tabular-nums;padding-top:2px}
+.v5-news p{margin:0;font-size:14px}
+
+/* publications & contributions（同一格式，参照 gcd19：venue 徽章置于标题前） */
+.v5-pub{display:grid;grid-template-columns:140px 1fr;gap:2px 20px;padding:17px 0;border-bottom:1px solid #ECEAE5;align-items:start}
+.v5-pub:last-child{border:0}
+.vbadge{padding-top:2px}
+.v5-venue{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;color:#0B5FA5;background:#EDF4FA;
+  border:1px solid #D7E6F4;border-radius:6px;padding:1px 9px;line-height:1.5}
+.v5-pub h3{font-size:15.5px;font-weight:600;line-height:1.5;margin:0 0 5px}
+.v5-pub h3 a{color:#1B1B1A}
+.v5-pub h3 a:hover{color:#0B5FA5}
+.v5-pub .au{font-size:13px;color:#55534F;margin:0}
+.v5-pub .au u{text-decoration:none;font-weight:700;color:#1B1B1A;border-bottom:2px solid #0B5FA5}
+.v5-pub .note{font-size:13px;color:#8F8C86;font-style:italic;margin:0}
+
+/* 通用 kv 行（patents / honors / educations / internships） */
+.v5-kv{display:grid;grid-template-columns:170px 1fr;gap:10px;padding:11px 0;border-bottom:1px dashed #ECEAE5;font-size:14px}
+.v5-kv:last-child{border:0}
+.v5-kv .dt{font-size:12.5px;color:#8F8C86;font-variant-numeric:tabular-nums;padding-top:2px}
+.v5-kv b{font-weight:600;color:#1B1B1A}
+
+/* interests */
+.v5-root h3.sub{font-size:14.5px;font-weight:600;color:#1B1B1A;margin:18px 0 8px}
+.v5-board{margin-top:10px;border:1px solid #ECEAE5;border-radius:12px;overflow:hidden;max-width:560px}
+.v5-board img{width:100%;display:block}
+.v5-board .cap{font-size:11.5px;color:#8F8C86;padding:8px 14px;border-top:1px solid #ECEAE5}
+.v5-root footer{margin-top:60px;border-top:1px solid #ECEAE5;padding-top:18px;font-size:11.5px;color:#8F8C86;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+@media (max-width:880px){
+  .v5-shell{grid-template-columns:1fr}
+  .v5-root aside{position:static;height:auto;border-right:0;border-bottom:1px solid #ECEAE5;padding:32px 24px 24px}
+  .v5-avatar{width:84px;height:84px}
+  .v5-root aside h1{margin-top:14px}
+  .v5-nav{flex-direction:row;flex-wrap:wrap;gap:6px;border-top:0;padding-top:10px}
+  .v5-nav a{margin-left:0;border-left:0;border:1px solid #ECEAE5;padding:4px 12px}
+  .v5-nav a.on{border-color:#0B5FA5}
+  .v5-root main{padding:32px 24px 60px}
+  .v5-kv{grid-template-columns:1fr;gap:2px}
+  .v5-pub{grid-template-columns:1fr;gap:6px}
+  .vbadge{padding-top:0}
+}
+
+/* =========================================================
+   V3 · 终端风布局
+   ========================================================= */
+.v3-root a{color:#58E6D9;text-decoration:none}
+.v3-root a:hover{text-decoration:underline;text-underline-offset:3px}
+.v3-wrap{max-width:920px;margin:0 auto;padding:48px 24px 60px}
+.v3-mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+.v3-boot{padding:16px 0 0}
+.v3-prompt{font-family:'JetBrains Mono',monospace;font-size:14px;color:#9DA9B5;margin:0 0 10px}
+.v3-prompt .u{color:#7EE787}.v3-prompt .p{color:#58E6D9}
+.v3-cursor{display:inline-block;width:9px;height:17px;background:#58E6D9;vertical-align:-3px;
+  animation:v3blink 1.1s steps(1) infinite}
+@keyframes v3blink{50%{opacity:0}}
+.v3-h1{font-family:'JetBrains Mono',monospace;font-size:clamp(26px,4.6vw,42px);font-weight:700;
+  margin:0 0 6px;letter-spacing:-.01em;color:#E6EDF3}
+.v3-h1 .zh{color:#C297F5;font-weight:400}
+.v3-prefer{margin:2px 0 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#66727F;letter-spacing:.06em}
+.v3-sub{color:#9DA9B5;font-family:'JetBrains Mono',monospace;font-size:13px;margin:0 0 26px}
+.v3-sub .ok{color:#7EE787}
+
+.v3-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#26303D;
+  border:1px solid #26303D;border-radius:10px;overflow:hidden;margin:0 0 30px}
+.v3-stat{background:#161D27;padding:14px 18px}
+.v3-stat .k{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:#66727F;margin-bottom:4px}
+.v3-stat .v{font-family:'JetBrains Mono',monospace;font-size:23px;font-weight:700;color:#58E6D9}
+
+.v3-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 44px}
+.v3-chips a{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9DA9B5;
+  border:1px solid #26303D;border-radius:100px;padding:5px 14px;background:#161D27;transition:all .15s}
+.v3-chips a:hover{color:#58E6D9;border-color:#2BB8AD;text-decoration:none}
+.v3-chips a b{color:#58E6D9;font-weight:500;margin-right:6px}
+
+.v3-root section{margin:0 0 38px;scroll-margin-top:20px}
+.v3-card{background:#161D27;border:1px solid #26303D;border-radius:12px;overflow:hidden}
+.v3-card-hd{display:flex;align-items:center;gap:8px;padding:11px 18px;border-bottom:1px solid #26303D;background:#1B2330}
+.v3-dot{width:11px;height:11px;border-radius:50%}
+.v3-dot.r{background:#F07092}.v3-dot.y{background:#E3B341}.v3-dot.g{background:#7EE787}
+.v3-card-hd .ttl{font-family:'JetBrains Mono',monospace;font-size:12px;color:#9DA9B5;margin-left:8px}
+.v3-card-hd .cmd{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#66727F}
+.v3-card-bd{padding:20px 22px}
+.v3-root p{color:#9DA9B5;margin:0 0 12px}
+.v3-root p b{color:#E6EDF3;font-weight:600}
+
+.v3-about{display:grid;grid-template-columns:1fr 190px;gap:26px;align-items:start}
+.v3-face{border:1px solid #26303D;border-radius:10px;overflow:hidden;background:#10161F}
+.v3-face img{width:100%;display:block;filter:saturate(.9)}
+.v3-face .cap{font-family:'JetBrains Mono',monospace;font-size:10px;color:#66727F;padding:7px 10px;border-top:1px solid #26303D}
+
+.v3-log{list-style:none;margin:0;padding:0}
+.v3-log li{display:grid;grid-template-columns:86px 1fr;gap:14px;padding:9px 0;border-bottom:1px dashed #26303D}
+.v3-log li:last-child{border:0}
+.v3-log time{font-family:'JetBrains Mono',monospace;font-size:12px;color:#66727F;padding-top:2px}
+.v3-log p{margin:0;font-size:14px}
+
+.v3-row{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid #26303D}
+.v3-row:last-child{border:0}
+.v3-row .ic{font-size:18px;text-align:center;opacity:.9}
+.v3-row h3{font-size:15.5px;font-weight:600;line-height:1.5;margin:0 0 5px}
+.v3-row h3 a{color:#E6EDF3}
+.v3-row h3 a:hover{color:#58E6D9}
+.v3-row .au{font-family:'JetBrains Mono',monospace;font-size:12px;color:#9DA9B5;margin:0 0 7px;line-height:1.7}
+.v3-row .au u{text-decoration:none;color:#58E6D9;font-weight:700}
+.v3-row .note{font-family:'JetBrains Mono',monospace;font-size:12px;color:#66727F;font-style:italic;margin:0 0 7px}
+.v3-row .meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:12px;font-family:'JetBrains Mono',monospace}
+.v3-venue{color:#C297F5;border:1px solid rgba(194,151,245,.35);background:rgba(194,151,245,.1);
+  border-radius:5px;padding:1px 9px;font-size:11px;font-weight:500}
+.v3-meta-a{color:#66727F;border-bottom:1px dotted #66727F}
+.v3-meta-a:hover{color:#58E6D9;border-color:#58E6D9;text-decoration:none}
+
+.v3-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
+.v3-kv{padding:10px 0;border-bottom:1px dashed #26303D;font-size:13.5px;color:#9DA9B5}
+.v3-kv:last-child{border:0}
+.v3-kv .dt{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#66727F;display:block;margin-bottom:2px}
+.v3-kv b{color:#E6EDF3;font-weight:600}
+.v3-root h3.sub{font-size:14.5px;font-weight:600;color:#E6EDF3;margin:16px 0 8px}
+.v3-board{margin-top:12px;border:1px solid #26303D;border-radius:10px;overflow:hidden;background:#10161F;max-width:640px}
+.v3-board img{width:100%;display:block}
+.v3-board .cap{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#66727F;padding:8px 12px;border-top:1px solid #26303D}
+.v3-root footer{border-top:1px solid #26303D;margin-top:10px;padding:24px 0 0;
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:#66727F;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+@media (max-width:760px){
+  .v3-stats{grid-template-columns:1fr 1fr}
+  .v3-about{grid-template-columns:1fr}
+  .v3-face{max-width:190px}
+  .v3-cols{grid-template-columns:1fr}
+  .v3-log li{grid-template-columns:1fr;gap:2px}
+}
+</style>
+</head>
+<body>
+
+<button id="themeToggle" type="button" aria-label="Switch theme">⌨&nbsp; Terminal</button>
+
+<!-- ================= V5 · 侧栏档案布局（主体） ================= -->
+<div class="v5-root">
+<div class="v5-shell">
+
+<aside>
+  <img class="v5-avatar" src="assets/avatar.jpg" alt="Wei Feng">
+  <h1>Wei Feng<span class="zh">冯惟</span></h1>
+  <p class="v5-prefer">Also prefer to be called VONWEI</p>
+  <p class="v5-bio">Tsinghua University<br>Ph.D. Candidate<br>Dept. Computer Science</p>
+  <p class="v5-contact"><span class="ic">📍</span>Beijing, China</p>
+  <p class="v5-contact"><span class="ic">✉</span><a href="mailto:vonwei_thu@163.com">vonwei_thu@163.com</a></p>
+  <p class="v5-contact"><span class="ic">🎓</span><a href="https://scholar.google.com/citations?user=Du42Q48AAAAJ&hl=zh-CN" target="_blank" rel="noopener">Google Scholar</a></p>
+  <nav class="v5-nav" aria-label="Sections">
+    <a href="#v5-about">About Me</a>
+    <a href="#v5-news">News</a>
+    <a href="#v5-pubs">Publications</a>
+    <a href="#v5-patent">Patent</a>
+    <a href="#v5-contrib">Other Academic Contributions</a>
+    <a href="#v5-honors">Honors and Awards</a>
+    <a href="#v5-edu">Educations</a>
+    <a href="#v5-intern">Internships</a>
+    <a href="#v5-interests">Interests</a>
+  </nav>
+</aside>
+
+<main>
+
+<section id="v5-about">
+  <h2 class="v5-h2"><span class="emj">🙋</span>About Me</h2>
+  <p>I am a PhD student at Department of Computer Science and Technology, Tsinghua University, advised by Prof. Wenwu Zhu and Prof. Xin Wang.</p>
+  <p>My interests lie in <b>Multimodal Intelligence</b>, <b>Embodied World Model</b>, and <b>Game Agent</b>.</p>
+  <p>I received my B.Eng. from School of Materials Science and Engineering, Tsinghua University in 2022.</p>
+  <p>Feel free to call me Von or VonWei in any casual, non-ID-check situation — I&#39;m perfectly fine with that. Just replacing &quot;Feng&quot; with the German word &quot;Von&quot;, since they share the same Chinese character 冯.</p>
+</section>
+
+<section id="v5-news">
+  <h2 class="v5-h2"><span class="emj">🔥</span>News</h2>
+  <ol class="v5-news">
+    <li><time>2026.07</time><p>🎉🎉 My first-author paper &quot;Modularized Dynamic-Granularity Video LLM for Multi-Event Long Video Understanding&quot; received <b>Best Student Paper Award</b> at IEEE ICME 2026.</p></li>
+    <li><time>2026.06</time><p>🎉🎉 My first-author paper &quot;Reflective Cross-Granularity Grounding with Preference Optimization for Long Video Understanding&quot; was selected as one of <b>Best Paper Candidates</b> at ACM ICMR 2026.</p></li>
+    <li><time>2025.07</time><p>🎉🎉 My first-author paper &quot;Multi-sentence Video Grounding for Long Video Generation&quot; received <b>Best Paper Runner-up Award</b> at IEEE ICME 2025.</p></li>
+    <li><time>2023.10</time><p>🎉🎉 My first-author paper &quot;Multimedia Cognition and Evaluation in Open Environments&quot; received <b>Best Paper Award</b> at ACM MM 2023 McGE Workshops.</p></li>
+  </ol>
+</section>
+
+<section id="v5-pubs">
+  <h2 class="v5-h2"><span class="emj">📝</span>Publications</h2>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">IEEE ICME 2026</span></div>
+    <div>
+      <h3><a href="https://arxiv.org/abs/2607.15778" target="_blank" rel="noopener">Modularized Dynamic-Granularity Video LLM for Multi-Event Long Video Understanding</a></h3>
+      <p class="au"><u>Wei Feng</u>, Xin Wang, Yu-Wei Zhan, Yuwei Zhou, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">ACM ICMR 2026</span></div>
+    <div>
+      <h3><a href="https://dl.acm.org/doi/full/10.1145/3805622.3810717" target="_blank" rel="noopener">Reflective Cross-Granularity Grounding with Preference Optimization for Long Video Understanding</a></h3>
+      <p class="au"><u>Wei Feng</u>, Xin Wang, Hong Chen, Yu-Wei Zhan, Zihan Song, Bin Huang, Kecheng Zheng, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">IEEE ICME 2025</span></div>
+    <div>
+      <h3><a href="https://ieeexplore.ieee.org/abstract/document/11209951" target="_blank" rel="noopener">Multi-sentence Video Grounding for Long Video Generation</a></h3>
+      <p class="au"><u>Wei Feng</u>, Xin Wang, Hong Chen, Zeyang Zhang, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">IEEE ICME 2025</span></div>
+    <div>
+      <h3><a href="https://ieeexplore.ieee.org/abstract/document/11209793" target="_blank" rel="noopener">Localizing Step-by-Step: Multimodal Long Video Temporal Grounding with LLM</a></h3>
+      <p class="au">Houlun Chen, Xin Wang, Hong Chen, <u>Wei Feng</u>, Zihan Song, Jia Jia, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">NeurIPS 2024</span></div>
+    <div>
+      <h3><a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/477929b8d45ab759795b7aac94329b08-Abstract-Datasets_and_Benchmarks_Track.html" target="_blank" rel="noopener">VERIFIED: A Video Corpus Moment Retrieval Benchmark for Fine-Grained Video Understanding</a></h3>
+      <p class="au">Houlun Chen, Xin Wang, Hong Chen, Zeyang Zhang, <u>Wei Feng</u>, Bin Huang, Jia Jia, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">ACM MM 2023 Workshop McGE</span></div>
+    <div>
+      <h3><a href="https://dl.acm.org/doi/abs/10.1145/3607541.3616823" target="_blank" rel="noopener">Multimedia Cognition and Evaluation in Open Environments</a></h3>
+      <p class="au"><u>Wei Feng</u>, Haoyang Li, Xin Wang, Xuguang Duan, Zi Qian, Wu Liu, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">ACM MM 2023 Demo Track</span></div>
+    <div>
+      <h3><a href="https://dl.acm.org/doi/abs/10.1145/3581783.3612669" target="_blank" rel="noopener">H2V4Sports: Real-time Horizontal-to-Vertical Video Converter for Sports Lives</a></h3>
+      <p class="au">Yi Han, Kaidong Li, Zihan Song, <u>Wei Feng</u>, Xiang Cao, Shida Guo, Xin Wang, Xuguang Duan, Wenwu Zhu</p>
+    </div>
+  </div>
+</section>
+
+<section id="v5-patent">
+  <h2 class="v5-h2"><span class="emj">📖</span>Patent</h2>
+  <div class="v5-kv"><span class="dt">2026.07.28</span><span><a href="http://epub.cnipa.gov.cn/cred/CN120564105B" target="_blank" rel="noopener">一种视频理解的处理方法、装置、设备以及存储介质</a> CN120564105B</span></div>
+  <div class="v5-kv"><span class="dt">2026.07.21</span><span><a href="http://epub.cnipa.gov.cn/cred/CN117851638B" target="_blank" rel="noopener">一种基于视觉模型的大语言模型视频时序定位方法及产品</a> CN117851638B</span></div>
+  <div class="v5-kv"><span class="dt">2025.12.02</span><span><a href="http://epub.cnipa.gov.cn/cred/CN118828144B" target="_blank" rel="noopener">多文本视频时序定位检索的长视频生成方法、系统和设备</a> CN118828144B</span></div>
+</section>
+
+<section id="v5-contrib">
+  <h2 class="v5-h2"><span class="emj">⭐</span>Other Academic Contributions</h2>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">arXiv 2025</span></div>
+    <div>
+      <h3><a href="https://arxiv.org/abs/2512.04532" target="_blank" rel="noopener">PhyVLLM: Physics-Guided Video Language Model with Motion-Appearance Disentanglement</a></h3>
+      <p class="au">Yu-Wei Zhan, Xin Wang, Hong Chen, Tongtong Feng, <u>Wei Feng</u>, Ren Wang, Guangyao Li, Qing Li, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">Springer 2025</span></div>
+    <div>
+      <h3><a href="https://link.springer.com/book/10.1007/978-3-031-94837-4" target="_blank" rel="noopener">Video Grounding and Its Generalization: From I.D. and Task-specific Models to O.O.D. and Large Foundation Models</a></h3>
+      <p class="note">Non-authorship, writing contributions recognized in acknowledgements</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">arXiv 2024</span></div>
+    <div>
+      <h3><a href="https://arxiv.org/abs/2409.14993v1" target="_blank" rel="noopener">Multi-Modal Generative AI: Multi-modal LLM, Diffusion and Beyond</a></h3>
+      <p class="au">Hong Chen, Xin Wang, Yuwei Zhou, Bin Huang, Yipeng Zhang, <u>Wei Feng</u>, Houlun Chen, Zeyang Zhang, Siao Tang, Wenwu Zhu</p>
+    </div>
+  </div>
+
+  <div class="v5-pub">
+    <div class="vbadge"><span class="v5-venue">arXiv 2023</span></div>
+    <div>
+      <h3><a href="https://arxiv.org/abs/2312.14206" target="_blank" rel="noopener">LLM4VG: Large Language Models Evaluation for Video Grounding</a></h3>
+      <p class="au"><u>Wei Feng</u>, Xin Wang, Hong Chen, Zeyang Zhang, Houlun Chen, Zihan Song, Yuwei Zhou, Yuekui Yang, Haiyang Wu, Wenwu Zhu</p>
+    </div>
+  </div>
+</section>
+
+<section id="v5-honors">
+  <h2 class="v5-h2"><span class="emj">🎖</span>Honors and Awards</h2>
+  <div class="v5-kv"><span class="dt">2026</span><span>Best Student Paper Award at IEEE ICME 2026</span></div>
+  <div class="v5-kv"><span class="dt">2025</span><span>清华大学综合优秀奖学金</span></div>
+  <div class="v5-kv"><span class="dt">2025</span><span>Best Paper Runner-up Award at IEEE ICME 2025</span></div>
+  <div class="v5-kv"><span class="dt">2024</span><span>清华大学优秀学生干部</span></div>
+  <div class="v5-kv"><span class="dt">2023</span><span>Best Paper Award at ACM MM 2023 McGE Workshops</span></div>
+  <div class="v5-kv"><span class="dt">2022</span><span>北京市优秀毕业生</span></div>
+  <div class="v5-kv"><span class="dt">2022</span><span>清华大学优良毕业生</span></div>
+  <div class="v5-kv"><span class="dt">2021</span><span>清华大学优秀共青团员</span></div>
+</section>
+
+<section id="v5-edu">
+  <h2 class="v5-h2"><span class="emj">🎓</span>Educations</h2>
+  <div class="v5-kv"><span class="dt">2022.09 – Now</span><span>PhD student in Department of Computer Science and Technology, Tsinghua University</span></div>
+  <div class="v5-kv"><span class="dt">2018.08 – 2022.06</span><span>B.Eng. in Materials Science and Engineering, Tsinghua University</span></div>
+</section>
+
+<section id="v5-intern">
+  <h2 class="v5-h2"><span class="emj">💻</span>Internships</h2>
+  <div class="v5-kv"><span class="dt">2026.07 - 2026.10</span><span>Keling AI, Beijing, China</span></div>
+  <div class="v5-kv"><span class="dt">2024.07 - 2024.10</span><span>Tencent, Beijing, China</span></div>
+</section>
+
+<section id="v5-interests">
+  <h2 class="v5-h2"><span class="emj">🎃</span>Interests</h2>
+  <p>⚽️ Football</p>
+  <p>🏸 Badminton</p>
+  <p>🎮 Game Agent, I am currently a participant of <a href="https://suyoumo.github.io/3d-game-agent-bench/" target="_blank" rel="noopener">3DGameAgentBench</a></p>
+  <p>🃏 I am a huge fan of boardgames, including RPG games (Arkham Horror), actuarial games (Lost Ruins of Arnak, Great Western Trail), and party games (UNO, Avalon, Love Letter). I have organized/participated in online or offline boardgames with friends from but not limited to the following countries: 🇨🇳🇺🇸🇫🇷🇦🇺🇮🇩🇩🇪🇧🇷🇮🇹🇭🇺🇧🇪🇨🇦🇦🇷🇫🇮🇵🇱🇵🇹. I am also designing my own boardgames <b>Yin Yang Scam（阴阳骗局）</b> and <b>Werewolf Scam（狼人骗局）</b>, and will share progress once they are ready — looking forward to connecting with fellow enthusiasts!</p>
+  <h3 class="sub">My boardgame preferences for games played in 2025</h3>
+  <figure class="v5-board" style="margin:0">
+    <img src="assets/boardgame2025_half.png" alt="Boardgame preferences 2025">
+    <figcaption class="cap">夯：Excellent, 顶级：Very Good, 人上人：Good, NPC：Worth to play, 拉：Recommended to play only one or two times at most</figcaption>
+  </figure>
+</section>
+
+<footer>
+  <span>© 2026 Wei Feng 冯惟</span>
+  <span>vonwei13.github.io · Beijing</span>
+</footer>
+
+</main>
+</div>
+</div>
+
+<!-- ================= V3 · 终端风布局（切换主题） ================= -->
+<div class="v3-root">
+<div class="v3-wrap">
+
+<header class="v3-boot">
+  <p class="v3-prompt"><span class="u">vonwei@tsinghua</span>:<span class="p">~</span>$ whoami</p>
+  <h1 class="v3-h1" id="v3Type">Wei Feng <span class="zh">冯惟</span></h1>
+  <p class="v3-prefer">Also prefer to be called VONWEI</p>
+  <p class="v3-sub">PhD candidate · CS, Tsinghua University · Multimodal Intelligence <span class="ok">[loaded]</span></p>
+  <div class="v3-stats">
+    <div class="v3-stat"><span class="k">Scholarly Works</span><span class="v">11</span></div>
+    <div class="v3-stat"><span class="k">1st-Author</span><span class="v">4</span></div>
+    <div class="v3-stat"><span class="k">Paper Awards</span><span class="v">3 🏆 · 1 cand</span></div>
+    <div class="v3-stat"><span class="k">Patents</span><span class="v">3</span></div>
+  </div>
+  <nav class="v3-chips">
+    <a href="#v3-about"><b>01</b>About Me</a>
+    <a href="#v3-news"><b>02</b>News</a>
+    <a href="#v3-pubs"><b>03</b>Publications</a>
+    <a href="#v3-patent"><b>04</b>Patent</a>
+    <a href="#v3-contrib"><b>05</b>Contributions</a>
+    <a href="#v3-honors"><b>06</b>Honors</a>
+    <a href="#v3-edu"><b>07</b>Educations</a>
+    <a href="#v3-intern"><b>08</b>Internships</a>
+    <a href="#v3-interests"><b>09</b>Interests</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="v3-about">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">cat about.md</span><span class="cmd">~/about</span></div>
+    <div class="v3-card-bd">
+      <div class="v3-about">
+        <div>
+          <p>I am a PhD student at Department of Computer Science and Technology, Tsinghua University, advised by Prof. Wenwu Zhu and Prof. Xin Wang.</p>
+          <p>My interests lie in <b>Multimodal Intelligence</b>, <b>Embodied World Model</b>, and <b>Game Agent</b>.</p>
+          <p>I received my B.Eng. from School of Materials Science and Engineering, Tsinghua University in 2022.</p>
+          <p>Feel free to call me Von or VonWei in any casual, non-ID-check situation — I&#39;m perfectly fine with that. Just replacing &quot;Feng&quot; with the German word &quot;Von&quot;, since they share the same Chinese character 冯.</p>
+        </div>
+        <figure class="v3-face" style="margin:0">
+          <img src="assets/avatar.jpg" alt="Wei Feng">
+          <div class="cap">avatar.jpg</div>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="v3-news">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">tail -f news.log</span><span class="cmd">~/logs</span></div>
+    <div class="v3-card-bd">
+      <ol class="v3-log">
+        <li><time>2026.07</time><p>🎉🎉 My first-author paper &quot;Modularized Dynamic-Granularity Video LLM for Multi-Event Long Video Understanding&quot; received <b>Best Student Paper Award</b> at IEEE ICME 2026.</p></li>
+        <li><time>2026.06</time><p>🎉🎉 My first-author paper &quot;Reflective Cross-Granularity Grounding with Preference Optimization for Long Video Understanding&quot; was selected as one of <b>Best Paper Candidates</b> at ACM ICMR 2026.</p></li>
+        <li><time>2025.07</time><p>🎉🎉 My first-author paper &quot;Multi-sentence Video Grounding for Long Video Generation&quot; received <b>Best Paper Runner-up Award</b> at IEEE ICME 2025.</p></li>
+        <li><time>2023.10</time><p>🎉🎉 My first-author paper &quot;Multimedia Cognition and Evaluation in Open Environments&quot; received <b>Best Paper Award</b> at ACM MM 2023 McGE Workshops.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="v3-pubs">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">ls -la ~/publications --sort=time</span><span class="cmd">7 items</span></div>
+    <div class="v3-card-bd">
+
+      <div class="v3-row"><span class="ic">🎬</span><div>
+        <h3><a href="https://arxiv.org/abs/2607.15778" target="_blank" rel="noopener">Modularized Dynamic-Granularity Video LLM for Multi-Event Long Video Understanding</a></h3>
+        <p class="au"><u>Wei Feng</u>, Xin Wang, Yu-Wei Zhan, Yuwei Zhou, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">IEEE ICME 2026</span><a class="v3-meta-a" href="https://arxiv.org/abs/2607.15778" target="_blank" rel="noopener">arXiv</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🪞</span><div>
+        <h3><a href="https://dl.acm.org/doi/full/10.1145/3805622.3810717" target="_blank" rel="noopener">Reflective Cross-Granularity Grounding with Preference Optimization for Long Video Understanding</a></h3>
+        <p class="au"><u>Wei Feng</u>, Xin Wang, Hong Chen, Yu-Wei Zhan, Zihan Song, Bin Huang, Kecheng Zheng, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">ACM ICMR 2026</span><a class="v3-meta-a" href="https://dl.acm.org/doi/full/10.1145/3805622.3810717" target="_blank" rel="noopener">ACM DL</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🎞️</span><div>
+        <h3><a href="https://ieeexplore.ieee.org/abstract/document/11209951" target="_blank" rel="noopener">Multi-sentence Video Grounding for Long Video Generation</a></h3>
+        <p class="au"><u>Wei Feng</u>, Xin Wang, Hong Chen, Zeyang Zhang, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">IEEE ICME 2025</span><a class="v3-meta-a" href="https://ieeexplore.ieee.org/abstract/document/11209951" target="_blank" rel="noopener">IEEE</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🪜</span><div>
+        <h3><a href="https://ieeexplore.ieee.org/abstract/document/11209793" target="_blank" rel="noopener">Localizing Step-by-Step: Multimodal Long Video Temporal Grounding with LLM</a></h3>
+        <p class="au">Houlun Chen, Xin Wang, Hong Chen, <u>Wei Feng</u>, Zihan Song, Jia Jia, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">IEEE ICME 2025</span><a class="v3-meta-a" href="https://ieeexplore.ieee.org/abstract/document/11209793" target="_blank" rel="noopener">IEEE</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🧪</span><div>
+        <h3><a href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/477929b8d45ab759795b7aac94329b08-Abstract-Datasets_and_Benchmarks_Track.html" target="_blank" rel="noopener">VERIFIED: A Video Corpus Moment Retrieval Benchmark for Fine-Grained Video Understanding</a></h3>
+        <p class="au">Houlun Chen, Xin Wang, Hong Chen, Zeyang Zhang, <u>Wei Feng</u>, Bin Huang, Jia Jia, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">NeurIPS 2024</span><a class="v3-meta-a" href="https://proceedings.neurips.cc/paper_files/paper/2024/hash/477929b8d45ab759795b7aac94329b08-Abstract-Datasets_and_Benchmarks_Track.html" target="_blank" rel="noopener">NeurIPS</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🧠</span><div>
+        <h3><a href="https://dl.acm.org/doi/abs/10.1145/3607541.3616823" target="_blank" rel="noopener">Multimedia Cognition and Evaluation in Open Environments</a></h3>
+        <p class="au"><u>Wei Feng</u>, Haoyang Li, Xin Wang, Xuguang Duan, Zi Qian, Wu Liu, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">ACM MM 2023 Workshop McGE</span><a class="v3-meta-a" href="https://dl.acm.org/doi/abs/10.1145/3607541.3616823" target="_blank" rel="noopener">ACM DL</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🏀</span><div>
+        <h3><a href="https://dl.acm.org/doi/abs/10.1145/3581783.3612669" target="_blank" rel="noopener">H2V4Sports: Real-time Horizontal-to-Vertical Video Converter for Sports Lives</a></h3>
+        <p class="au">Yi Han, Kaidong Li, Zihan Song, <u>Wei Feng</u>, Xiang Cao, Shida Guo, Xin Wang, Xuguang Duan, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">ACM MM 2023 Demo Track</span><a class="v3-meta-a" href="https://dl.acm.org/doi/abs/10.1145/3581783.3612669" target="_blank" rel="noopener">ACM DL</a></div>
+      </div></div>
+
+    </div>
+  </div>
+</section>
+
+<section id="v3-patent">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">ls ~/patents</span><span class="cmd">3 items</span></div>
+    <div class="v3-card-bd">
+      <div class="v3-cols">
+        <div class="v3-kv"><span class="dt">2026.07.28</span><a href="http://epub.cnipa.gov.cn/cred/CN120564105B" target="_blank" rel="noopener">一种视频理解的处理方法、装置、设备以及存储介质</a> CN120564105B</div>
+        <div class="v3-kv"><span class="dt">2026.07.21</span><a href="http://epub.cnipa.gov.cn/cred/CN117851638B" target="_blank" rel="noopener">一种基于视觉模型的大语言模型视频时序定位方法及产品</a> CN117851638B</div>
+        <div class="v3-kv"><span class="dt">2025.12.02</span><a href="http://epub.cnipa.gov.cn/cred/CN118828144B" target="_blank" rel="noopener">多文本视频时序定位检索的长视频生成方法、系统和设备</a> CN118828144B</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="v3-contrib">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">ls ~/contributions</span><span class="cmd">4 items</span></div>
+    <div class="v3-card-bd">
+
+      <div class="v3-row"><span class="ic">⚙️</span><div>
+        <h3><a href="https://arxiv.org/abs/2512.04532" target="_blank" rel="noopener">PhyVLLM: Physics-Guided Video Language Model with Motion-Appearance Disentanglement</a></h3>
+        <p class="au">Yu-Wei Zhan, Xin Wang, Hong Chen, Tongtong Feng, <u>Wei Feng</u>, Ren Wang, Guangyao Li, Qing Li, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">arXiv 2025</span><a class="v3-meta-a" href="https://arxiv.org/abs/2512.04532" target="_blank" rel="noopener">arXiv</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">📚</span><div>
+        <h3><a href="https://link.springer.com/book/10.1007/978-3-031-94837-4" target="_blank" rel="noopener">Video Grounding and Its Generalization: From I.D. and Task-specific Models to O.O.D. and Large Foundation Models</a></h3>
+        <p class="note">Non-authorship, writing contributions recognized in acknowledgements</p>
+        <div class="meta"><span class="v3-venue">Springer 2025</span><a class="v3-meta-a" href="https://link.springer.com/book/10.1007/978-3-031-94837-4" target="_blank" rel="noopener">Springer</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🌐</span><div>
+        <h3><a href="https://arxiv.org/abs/2409.14993v1" target="_blank" rel="noopener">Multi-Modal Generative AI: Multi-modal LLM, Diffusion and Beyond</a></h3>
+        <p class="au">Hong Chen, Xin Wang, Yuwei Zhou, Bin Huang, Yipeng Zhang, <u>Wei Feng</u>, Houlun Chen, Zeyang Zhang, Siao Tang, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">arXiv 2024</span><a class="v3-meta-a" href="https://arxiv.org/abs/2409.14993v1" target="_blank" rel="noopener">arXiv</a></div>
+      </div></div>
+
+      <div class="v3-row"><span class="ic">🧭</span><div>
+        <h3><a href="https://arxiv.org/abs/2312.14206" target="_blank" rel="noopener">LLM4VG: Large Language Models Evaluation for Video Grounding</a></h3>
+        <p class="au"><u>Wei Feng</u>, Xin Wang, Hong Chen, Zeyang Zhang, Houlun Chen, Zihan Song, Yuwei Zhou, Yuekui Yang, Haiyang Wu, Wenwu Zhu</p>
+        <div class="meta"><span class="v3-venue">arXiv 2023</span><a class="v3-meta-a" href="https://arxiv.org/abs/2312.14206" target="_blank" rel="noopener">arXiv</a></div>
+      </div></div>
+
+    </div>
+  </div>
+</section>
+
+<section id="v3-honors">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">cat honors.lst</span><span class="cmd">8 entries</span></div>
+    <div class="v3-card-bd">
+      <div class="v3-cols">
+        <div class="v3-kv"><span class="dt">2026</span>Best Student Paper Award at IEEE ICME 2026</div>
+        <div class="v3-kv"><span class="dt">2025</span>清华大学综合优秀奖学金</div>
+        <div class="v3-kv"><span class="dt">2025</span>Best Paper Runner-up Award at IEEE ICME 2025</div>
+        <div class="v3-kv"><span class="dt">2024</span>清华大学优秀学生干部</div>
+        <div class="v3-kv"><span class="dt">2023</span>Best Paper Award at ACM MM 2023 McGE Workshops</div>
+        <div class="v3-kv"><span class="dt">2022</span>北京市优秀毕业生</div>
+        <div class="v3-kv"><span class="dt">2022</span>清华大学优良毕业生</div>
+        <div class="v3-kv"><span class="dt">2021</span>清华大学优秀共青团员</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="v3-edu">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">history | grep education</span><span class="cmd">2 entries</span></div>
+    <div class="v3-card-bd">
+      <div class="v3-kv"><span class="dt">2022.09 – Now</span>PhD student in Department of Computer Science and Technology, Tsinghua University</div>
+      <div class="v3-kv"><span class="dt">2018.08 – 2022.06</span>B.Eng. in Materials Science and Engineering, Tsinghua University</div>
+    </div>
+  </div>
+</section>
+
+<section id="v3-intern">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">history | grep internships</span><span class="cmd">2 entries</span></div>
+    <div class="v3-card-bd">
+      <div class="v3-kv"><span class="dt">2026.07 - 2026.10</span>Keling AI, Beijing, China</div>
+      <div class="v3-kv"><span class="dt">2024.07 - 2024.10</span>Tencent, Beijing, China</div>
+    </div>
+  </div>
+</section>
+
+<section id="v3-interests">
+  <div class="v3-card">
+    <div class="v3-card-hd"><span class="v3-dot r"></span><span class="v3-dot y"></span><span class="v3-dot g"></span>
+      <span class="ttl">bash fun.sh</span><span class="cmd">exit 0</span></div>
+    <div class="v3-card-bd">
+      <p>⚽️ Football</p>
+      <p>🏸 Badminton</p>
+      <p>🎮 Game Agent, I am currently a participant of <a href="https://suyoumo.github.io/3d-game-agent-bench/" target="_blank" rel="noopener">3DGameAgentBench</a></p>
+      <p>🃏 I am a huge fan of boardgames, including RPG games (Arkham Horror), actuarial games (Lost Ruins of Arnak, Great Western Trail), and party games (UNO, Avalon, Love Letter). I have organized/participated in online or offline boardgames with friends from but not limited to the following countries: 🇨🇳🇺🇸🇫🇷🇦🇺🇮🇩🇩🇪🇧🇷🇮🇹🇭🇺🇧🇪🇨🇦🇦🇷🇫🇮🇵🇱🇵🇹. I am also designing my own boardgames <b>Yin Yang Scam（阴阳骗局）</b> and <b>Werewolf Scam（狼人骗局）</b>, and will share progress once they are ready — looking forward to connecting with fellow enthusiasts!</p>
+      <h3 class="sub">My boardgame preferences for games played in 2025</h3>
+      <figure class="v3-board" style="margin:0">
+        <img src="assets/boardgame2025_half.png" alt="Boardgame preferences 2025">
+        <figcaption class="cap">$ cat ratings_2025.png — 夯：Excellent, 顶级：Very Good, 人上人：Good, NPC：Worth to play, 拉：Recommended to play only one or two times at most</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>© 2026 WEI FENG 冯惟 · vonwei13.github.io</span>
+  <span>vonwei_thu@163.com · Beijing</span>
+</footer>
+
+</div>
+</div>
+
+<script>
+(function(){
+  var KEY='wf-home-theme', btn=document.getElementById('themeToggle');
+  function apply(t,persist){
+    document.documentElement.setAttribute('data-theme',t);
+    btn.innerHTML = t==='terminal' ? '◧&nbsp; Normal' : '⌨&nbsp; Terminal';
+    if(persist){try{localStorage.setItem(KEY,t)}catch(e){}}
+    window.scrollTo(0,0);
+    if(t==='terminal') startType();
+  }
+  var init='v5';
+  try{ init = localStorage.getItem(KEY) || 'v5'; }catch(e){}
+  if(location.hash==='#terminal') init='terminal';
+  apply(init,false);
+  btn.addEventListener('click',function(){
+    apply(document.documentElement.getAttribute('data-theme')==='terminal'?'v5':'terminal',true);
+  });
+
+  /* V3 打字机效果（仅终端主题首次进入时） */
+  var typed=false;
+  function startType(){
+    if(typed) return; typed=true;
+    var h=document.getElementById('v3Type'); if(!h) return;
+    var zhSpan=h.querySelector('.zh');
+    var zh=zhSpan?zhSpan.textContent:'';
+    var head=h.textContent.replace(zh,'');
+    h.textContent=''; zhSpan&&zhSpan.remove();
+    var cur=h, i=0, full=head+zh, split=head.length;
+    var span=null;
+    (function type(){
+      if(i>=full.length){
+        var c=document.createElement('span'); c.className='v3-cursor'; h.appendChild(c); return;
+      }
+      if(i===split){
+        span=document.createElement('span'); span.className='zh'; h.appendChild(span); cur=span;
+      }
+      cur.appendChild(document.createTextNode(full[i])); i++;
+      setTimeout(type, full[i-1] && full[i-1].charCodeAt(0)>255?120:34);
+    })();
+  }
+  if(document.documentElement.getAttribute('data-theme')==='terminal') startType();
+
+  /* V5 侧栏 scrollspy */
+  var ids=['v5-about','v5-news','v5-pubs','v5-patent','v5-contrib','v5-honors','v5-edu','v5-intern','v5-interests'];
+  var links={};
+  document.querySelectorAll('.v5-nav a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+  var els=ids.map(function(i){return document.getElementById(i)}).filter(Boolean);
+  function upd(){
+    if(document.documentElement.getAttribute('data-theme')!=='v5') return;
+    var line=innerHeight*.35,cur=els[0];
+    els.forEach(function(el){if(el.getBoundingClientRect().top<=line)cur=el});
+    ids.forEach(function(id){if(links[id])links[id].classList.toggle('on',cur&&cur.id===id)});
+  }
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+})();
+</script>
+</body>
+</html>
