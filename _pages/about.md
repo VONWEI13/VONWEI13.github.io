@@ -82,7 +82,7 @@ Feel free to call me Von or VonWei in any casual, non-ID-check situation — I'm
 - *2018.08 – 2022.06*: B.Eng. in Materials Science and Engineering, Tsinghua University
 
 # 💻 Internships
-- *2026.07 - Now*: Keling AI, Beijing, China
+- *2026.07 - 2026.10*: Keling AI, Beijing, China
 - *2024.07 - 2024.10*: Tencent, Beijing, China
 
 # 🎃 Interests
